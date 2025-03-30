@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -161,3 +162,8 @@ REST_FRAMEWORK = {
 
 # Custom settings
 AUTH_USER_MODEL = "core.User"
+
+INSTALLED_APPS = [
+    'core.tests',  # Register the models path
+    'rest_framework',
+]
