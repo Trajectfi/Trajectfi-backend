@@ -22,7 +22,8 @@ from rest_framework import serializers, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.urls import path
-from core.tests.models import AcceptedToken, Listing # type: ignore
+from core.tests.models import AcceptedToken, Listing  # type: ignore
+
 
 # Serializer
 class AcceptedTokenSerializer(serializers.ModelSerializer):
@@ -30,19 +31,25 @@ class AcceptedTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AcceptedToken
-        fields = ['contract_address', 'name', 'listing_count']
+        fields = ["contract_address", "name", "listing_count"]
 
     def get_listing_count(self, obj):
         return obj.listing_count
 
+
 # View
 class AcceptedTokenListView(generics.ListAPIView):
-    queryset = AcceptedToken.objects.annotate(listing_count=Count('listing'))
+    queryset = AcceptedToken.objects.annotate(listing_count=Count("listing"))
     serializer_class = AcceptedTokenSerializer
+
 
 # URL Configuration
 urlpatterns = [
-    path('api/accepted-tokens/', AcceptedTokenListView.as_view(), name='accepted-token-list'),
+    path(
+        "api/accepted-tokens/",
+        AcceptedTokenListView.as_view(),
+        name="accepted-token-list",
+    ),
 ]
 
 urlpatterns = [

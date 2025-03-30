@@ -164,6 +164,6 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "core.User"
 
 INSTALLED_APPS = [
-    'core.tests',  # Register the models path
-    'rest_framework',
+    "core.tests",  # Register the models path
+    "rest_framework",
 ]
