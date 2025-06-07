@@ -25,4 +25,9 @@ urlpatterns = [
     ),
     path("offer/create/", views.OfferCreateAPIView.as_view(), name="create-offer"),
     path("offer/cancel/", views.OfferCancelAPIView.as_view(), name="cancel-offer"),
+    path(
+        "account/update-email/",
+        views.UpdateEmailAPIView.as_view(),
+        name="update-email",
+    ),
 ]

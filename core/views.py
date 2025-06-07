@@ -80,3 +80,36 @@ class ListingListAPIView(ListAPIView):
             queryset = queryset.filter(user__public_key__iexact=borrower_address)
 
         return queryset
+
+
+class UpdateEmailAPIView(GenericAPIView):
+    """
+    API endpoint for authenticated users to update their email address.
+
+    Requires authentication via Knox token.
+    Validates email format and updates the user's email in the database.
+    """
+
+    serializer_class = serializers.UpdateEmailSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        """
+        Update authenticated user's email address.
+
+        Returns:
+            200 OK: Email updated successfully
+            400 Bad Request: Invalid email format
+            401 Unauthorized: User not authenticated
+        """
+        serializer = self.serializer_class(
+            data=request.data, context={"user": request.user}
+        )
+        serializer.is_valid(raise_exception=True)
+
+        updated_user = serializer.save()
+
+        return Response(
+            {"message": "Email updated successfully", "email": updated_user.email},
+            status=status.HTTP_200_OK,
+        )

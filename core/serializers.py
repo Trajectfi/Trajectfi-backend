@@ -250,3 +250,27 @@ class ListingSerializer(serializers.ModelSerializer):
             "created_at",
             "status",
         ]
+
+
+class UpdateEmailSerializer(serializers.Serializer):
+    """
+    Serializer for updating user email address.
+    """
+
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        """
+        Validate that the email is properly formatted.
+        """
+
+        return value.lower()
+
+    def save(self):
+        """
+        Update the authenticated user's email address.
+        """
+        user = self.context["user"]
+        user.email = self.validated_data["email"]
+        user.save(update_fields=["email"])
+        return user
